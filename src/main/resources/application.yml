@@ -1,0 +1,8 @@
+token:
+  secretKey: ${TOKEN_SECRET_KEY}
+  accessTokenExpirationMillis: 3600000
+  refreshTokenExpirationMillis: 1209600000
+
+server:
+  port: 8081
+
