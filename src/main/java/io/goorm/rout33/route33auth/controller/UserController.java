@@ -1,10 +1,7 @@
 package io.goorm.rout33.route33auth.controller;
 
 
-import io.goorm.rout33.route33auth.model.dto.TokenRefreshRequestDto;
-import io.goorm.rout33.route33auth.model.dto.TokenRefreshResponseDto;
-import io.goorm.rout33.route33auth.model.dto.UserLoginRequestDto;
-import io.goorm.rout33.route33auth.model.dto.UserLogoutResponseDto;
+import io.goorm.rout33.route33auth.model.dto.*;
 import io.goorm.rout33.route33auth.service.UserRepository;
 import io.goorm.rout33.route33auth.service.UserService;
 import io.goorm.rout33.route33auth.service.auth.TokenPair;
@@ -26,6 +23,15 @@ public class UserController {
     private final UserService userService;
     private final TokenService tokenService;
     private final UserRepository userRepository;
+
+
+
+    @PostMapping("/register")
+    public ResponseEntity<?> createUser(@RequestBody UserRegisterRequestDto requestDto) {
+        userService.createUserAndAccount(requestDto);
+
+        return new ResponseEntity<>(new CustomResponseDto<>("회원가입 성공", null), HttpStatus.OK);
+    }
 
 
     @PostMapping("/login")
