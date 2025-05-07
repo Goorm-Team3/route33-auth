@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.util.Base64;
 import java.util.Date;
 
 
@@ -38,15 +39,14 @@ public class TokenService {
     }
 
     public String createAccessToken(Long userId){
-        return Jwts.builder().claim(USER_ID_CLAIM,
-                userId
-        ).issuedAt(new Date()).expiration(new Date(System.currentTimeMillis() + accessTokenExpirationMillis)).signWith(secretKey,
-                Jwts.SIG.HS512).compact();
+        return Jwts.builder().claim(USER_ID_CLAIM,userId)
+                .issuedAt(new Date()).expiration(new Date(System.currentTimeMillis() + accessTokenExpirationMillis)).signWith(secretKey,
+                        Jwts.SIG.HS256).compact();
     }
 
     public String createRefreshToken(){
         return Jwts.builder().issuedAt(new Date()).expiration(new Date(System.currentTimeMillis() + refreshTokenExpirationMillis)).signWith(secretKey,
-                Jwts.SIG.HS512). compact();
+                Jwts.SIG.HS256).compact();
     }
 
     public TokenPair createTokenPair(Long userId){
@@ -71,5 +71,4 @@ public class TokenService {
         User user = userRepository.getByRefreshToken(refreshToken);
         return createTokenPair(user.getUserId());
     }
-
 }
