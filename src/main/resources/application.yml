@@ -1,8 +1,0 @@
-#token:
-#  secretKey: "f8rFZC1PqM9N4wzLdU5xO7gqAJxEyYvDp2RBRyL8h4GnMwTb3sd09fsdvsmvsd09fvsdfWa6VYfuKcJXgQeSzLkaRn9C2HtFvJ9m=="
-#  accessTokenExpirationMillis: 3600000
-#  refreshTokenExpirationMillis: 1209600000
-#
-#server:
-#  port: 8081
-#
