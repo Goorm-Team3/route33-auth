@@ -30,6 +30,7 @@ public class TokenPropertyLoader {
                         .secretId(SECRET_NAME)
                         .build())
                 .secretString();
+        System.out.println(secretString);
 
         try {
             Properties props = new Properties();
