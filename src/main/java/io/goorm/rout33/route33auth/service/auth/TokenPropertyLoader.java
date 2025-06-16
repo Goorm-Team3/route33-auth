@@ -13,11 +13,18 @@ import java.util.Properties;
 public class TokenPropertyLoader {
 
     private static final String SECRET_NAME = "spring/backend/token-config";
+    private final SecretsManagerClient client;
 
-    public TokenProperty load() {
-        SecretsManagerClient client = SecretsManagerClient.builder()
+    public TokenPropertyLoader() {
+        this.client = SecretsManagerClient.builder()
                 .region(Region.of("ap-northeast-2"))
                 .build();
+    }
+
+    public TokenProperty load() {
+//        SecretsManagerClient client = SecretsManagerClient.builder()
+//                .region(Region.of("ap-northeast-2"))
+//                .build();
 
         String secretString = client.getSecretValue(GetSecretValueRequest.builder()
                         .secretId(SECRET_NAME)
