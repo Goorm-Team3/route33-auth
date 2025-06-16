@@ -26,17 +26,30 @@ public class TokenService {
     private final long refreshTokenExpirationMillis;
     private final UserRepository userRepository;
 
-    public TokenService(TokenProperty tokenProperty, UserRepository userRepository){
+//    public TokenService(TokenProperty tokenProperty, UserRepository userRepository){
+//
+//
+//        byte[] keyBytes = Decoders.BASE64.decode(tokenProperty.secretKey());
+//
+//        this.secretKey = Keys.hmacShaKeyFor(keyBytes);
+////        this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(tokenProperty.secretKey()));
+//        this.accessTokenExpirationMillis = tokenProperty.accessTokenExpirationMillis();
+//        this.refreshTokenExpirationMillis = tokenProperty.refreshTokenExpirationMillis();
+//        this.userRepository = userRepository;
+//    }
 
+    // # AWS Secrets Manager applied
+public TokenService(TokenPropertyLoader loader, UserRepository userRepository){
+    TokenProperty tokenProperty = loader.load();
 
-        byte[] keyBytes = Decoders.BASE64.decode(tokenProperty.secretKey());
+    byte[] keyBytes = Decoders.BASE64.decode(tokenProperty.secretKey());
 
-        this.secretKey = Keys.hmacShaKeyFor(keyBytes);
+    this.secretKey = Keys.hmacShaKeyFor(keyBytes);
 //        this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(tokenProperty.secretKey()));
-        this.accessTokenExpirationMillis = tokenProperty.accessTokenExpirationMillis();
-        this.refreshTokenExpirationMillis = tokenProperty.refreshTokenExpirationMillis();
-        this.userRepository = userRepository;
-    }
+    this.accessTokenExpirationMillis = tokenProperty.accessTokenExpirationMillis();
+    this.refreshTokenExpirationMillis = tokenProperty.refreshTokenExpirationMillis();
+    this.userRepository = userRepository;
+}
 
     public String createAccessToken(Long userId){
         return Jwts.builder().claim(USER_ID_CLAIM,userId)
